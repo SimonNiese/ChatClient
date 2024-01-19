@@ -79,7 +79,8 @@ def send_message(message, sender, recipient, server_url):
     key = RSA.import_key(response)
     encrypted_message = encrypt_message(message.encode("utf-8"), key)
     signature = sign_message(encrypted_message)
-    chat_message = ChatMessage(sender, recipient, encrypted_message.hex(), signature.hex()).__dict__
+    chat_message = ChatMessage(sender=sender, recipient=recipient, message=encrypted_message.hex(), signature=signature.hex()).__dict__
+    print(chat_message)
     requests.post(server_url + "/chat", json=chat_message)
 
 
@@ -97,7 +98,7 @@ def receive_messages(server_url, username):
 def write_message(sender, server_url):
     recipient = input("Recipient: ")
     message = input("Message: ")
-    send_message(message, recipient, sender, server_url)
+    send_message(message=message, recipient=recipient, sender=sender, server_url=server_url)
 
 
 server = "https://chat.digitalhyena.io"
