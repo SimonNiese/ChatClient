@@ -80,7 +80,6 @@ def send_message(message, sender, recipient, server_url):
     encrypted_message = encrypt_message(message.encode("utf-8"), key)
     signature = sign_message(encrypted_message)
     chat_message = ChatMessage(sender=sender, recipient=recipient, message=encrypted_message.hex(), signature=signature.hex()).__dict__
-    print(chat_message)
     requests.post(server_url + "/chat", json=chat_message)
 
 
